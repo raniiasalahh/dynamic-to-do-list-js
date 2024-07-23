@@ -6,16 +6,16 @@ document.addEventListener('DOMContentLoaded', function() {
 
     // Load tasks from Local Storage and display them
     function loadTasks() {
-        // Retrieve tasks from Local Storage
         const storedTasks = JSON.parse(localStorage.getItem('tasks') || '[]');
-        // Add each task to the DOM
         storedTasks.forEach(taskText => addTask(taskText, false)); // 'false' means don't save again
     }
 
     // Function to add a new task
     function addTask(taskText, save = true) {
-        // Trim and check if the task text is not empty
-        taskText = taskText.trim();
+        // Retrieve and trim the value from the task input field
+        taskText = taskInput.value.trim();
+        
+        // Check if the task text is not empty
         if (taskText === '') {
             alert('Please enter a task');
             return;
@@ -60,12 +60,12 @@ document.addEventListener('DOMContentLoaded', function() {
 
     // Attach event listeners
     addButton.addEventListener('click', function() {
-        addTask(taskInput.value);
+        addTask();
     });
 
     taskInput.addEventListener('keypress', function(event) {
         if (event.key === 'Enter') {
-            addTask(taskInput.value);
+            addTask();
             event.preventDefault(); // Prevent form submission or additional actions
         }
     });
