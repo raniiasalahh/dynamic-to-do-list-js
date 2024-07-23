@@ -9,13 +9,17 @@ document.addEventListener('DOMContentLoaded', function() {
         // Retrieve tasks from Local Storage and parse them
         const storedTasks = JSON.parse(localStorage.getItem('tasks') || '[]');
         // Create and append tasks to the list
-        storedTasks.forEach(taskText => addTask(taskText, false));
+        storedTasks.forEach(taskText => addTask(taskText, false)); // 'false' means don't save again
     }
 
     // Function to add a new task
     function addTask(taskText, save = true) {
-        // If taskText is empty, do nothing
-        if (taskText.trim() === '') return;
+        // Trim and check if the task text is not empty
+        taskText = taskText.trim();
+        if (taskText === '') {
+            alert('Please enter a task');
+            return;
+        }
 
         // Create a new list item
         const listItem = document.createElement('li');
@@ -56,12 +60,13 @@ document.addEventListener('DOMContentLoaded', function() {
 
     // Attach event listeners
     addButton.addEventListener('click', function() {
-        addTask(taskInput.value.trim());
+        addTask(taskInput.value);
     });
 
     taskInput.addEventListener('keypress', function(event) {
         if (event.key === 'Enter') {
-            addTask(taskInput.value.trim());
+            addTask(taskInput.value);
+            event.preventDefault(); // Prevent form submission or additional actions
         }
     });
 
